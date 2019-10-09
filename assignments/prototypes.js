@@ -142,8 +142,7 @@ Humanoid.prototype.greet = function () {
 
 //# ================================Villain=============================================
   function Villain(attrs){
-    this.name = attrs.name
-    this.healthPoints = attrs.healthPoints
+    Humanoid.call(this, attrs);
     this.phrase = attrs.phrase;
   };
 
@@ -160,8 +159,7 @@ Villain.prototype.darkWave = function(hero){
   //# ================================Hero=============================================
 
   function Hero (attrs){
-    this.name = attrs.name
-    this.healthPoints = attrs.healthPoints
+    Humanoid.call(this, attrs);
     this.phrase = attrs.phrase;
     };
   Hero.prototype = Object.create(Humanoid.prototype);
