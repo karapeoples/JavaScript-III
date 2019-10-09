@@ -31,9 +31,9 @@ GameObject.prototype.destroy = function () {
   * should inherit destroy() from GameObject's prototype
 */
 
-function CharacterStats(charAttrs){
-  GameObject.call(this, charAttrs);
-    this.healthPoints = charAttrs.healthPoints
+function CharacterStats(attrs){
+  GameObject.call(this, attrs);
+    this.healthPoints = attrs.healthPoints
     };
   
   CharacterStats.prototype = Object.create(GameObject.prototype);
@@ -51,11 +51,11 @@ function CharacterStats(charAttrs){
   * should inherit takeDamage() from CharacterStats
 */
 
-function Humanoid(humanAttrs){
-  CharacterStats.call(this, humanAttrs);
-  this.team = humanAttrs.team;
-  this.weapons = humanAttrs.weapons;
-  this.language = humanAttrs.language;
+function Humanoid(attrs){
+  CharacterStats.call(this, attrs);
+  this.team = attrs.team;
+  this.weapons = attrs.weapons;
+  this.language = attrs.language;
   
 }
 
@@ -140,45 +140,73 @@ Humanoid.prototype.greet = function () {
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
 
-  function Villain (attributes){
-    Humanoid.call (this, attributes);
-    this.darkWave = function(hero){
-      hero.healthPoints = hero.healthpoints -1;
-      if (hero.healthPoints < 0){
-        return (`${this.name} has become deceased. ${hero.destroy()} ${this.name} wins!`);
-      }
-      else{
-        return (`${this.name} casts darkWave ${hero.name} has ${hero.healthPoints} health left.`)
-      }
+//# ================================Villain=============================================
+  function Villain(attrs){
+    this.name = attrs.name
+    this.healthPoints = attrs.healthPoints
+    this.phrase = attrs.phrase;
   };
-};
+
 Villain.prototype = Object.create(Humanoid.prototype);
-  
-  
-
-  function Hero (attributes){
-    Humanoid.call(this, attributes);
-    this.superStrength = function(villain){
-      villain.healthPoints = villain.healthPoints -1;
-      if (villain.healthPoints < 0){
-        return (`${this.name} has become deceased. ${villain.destroy()} ${this.name} wins!`)
-      }
-      else{
-        return `${this.name} casts superStrength ${villain.name} has ${villain.healthPoints} health left.`
-      }
+Villain.prototype.darkWave = function(hero){
+  hero.healthPoints = hero.healthPoints - 3;
+    if (hero.healthPoints <= 0) {
+      return `${hero.name} has become deceased. ${hero.destroy()} ${this.name} mutters ${this.phrase}!`;
+    } else {
+      return `${this.name} casts darkWave. ${hero.name} has ${hero.healthPoints} health points remaining.`;
+    };
   };
-};
+
+  //# ================================Hero=============================================
+
+  function Hero (attrs){
+    this.name = attrs.name
+    this.healthPoints = attrs.healthPoints
+    this.phrase = attrs.phrase;
+    };
   Hero.prototype = Object.create(Humanoid.prototype);
+  Hero.prototype.superStrength = function(villain){
+      villain.healthPoints = villain.healthPoints -5;
+      if (villain.healthPoints < 0){
+        return `${villain.name} has become deceased. ${villain.destroy()}. ${this.name} mutters  ${this.phrase}!`
+      } else{
+        return `${this.name} casts superStrength ${villain.name} has ${villain.healthPoints} health left.`
+        };
+}
+    
 
-
+//#===========================Information & Gaming Logs================================
   
- const wizard = new Humanoid ({
+ const wizard =  new Villain ({
    name: "Mezmo",
    healthPoints: 15,
+   phrase: "Bend to my will",
  });
 
- const fighter = new Humanoid({
+ const fighter = new Hero ({
    name: "Zonia",
    healthPoints: 15,
+   phrase: "Taste my steel",
 });
+
+console.log (wizard.darkWave(fighter));
+
+console.log (fighter.superStrength(wizard));
+
+console.log (wizard.darkWave(fighter));
+
+console.log (fighter.superStrength(wizard));
+
+console.log (wizard.darkWave(fighter));
+
+console.log (fighter.superStrength(wizard));
+
+console.log (wizard.darkWave(fighter));
+
+console.log (fighter.superStrength(wizard));
+
+//console.log (wizard.darkWave(fighter));
+
+
+
 

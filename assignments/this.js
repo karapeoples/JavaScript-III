@@ -60,3 +60,5 @@ let infoEB = {
     name: 'Dale',
     howKnown: 'Husband',
 }
+
+console.log (greet.call(infoEB))
